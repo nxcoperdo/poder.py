@@ -2,9 +2,12 @@
 
 Esta carpeta existe para dejar documentada la evolución prevista del proyecto.
 
-## Objetivo futuro
+## Objetivos a  futuro
 
-A futuro, la idea es que el asistente deje de responder solo con código Python y pueda funcionar de forma más abierta, para responder distintos tipos de preguntas y temas.
+1. A futuro, la idea es que el asistente deje de responder solo con código Python y pueda funcionar de forma más abierta, para responder distintos tipos de preguntas y temas.
+
+2. Se plantea implementar la conmutación manual del esquema cromático del overlay, con el objetivo de optimizar la legibilidad y la accesibilidad visual en entornos con fondos claros y oscuros.
+este tema se consultara entre desarroladores y usuarios para definir la mejor forma de implementarlo.
 
 ## Estado actual
 
