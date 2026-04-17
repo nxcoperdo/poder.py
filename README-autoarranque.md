@@ -10,9 +10,9 @@ Este archivo quedó solo como referencia histórica. El proyecto ya no usa autoa
 
 ## Motivo de la descontinuación
 
-Se decidió no continuar con el autoarranque porque, al cerrar el script con `F10`, Ollama puede seguir ejecutándose en segundo plano.
+Se decidió retirar el esquema de autoarranque debido a que `F10` solo finaliza la interfaz principal del script, pero no garantiza la terminación completa de los procesos asociados a Ollama, que pueden permanecer activos en segundo plano.
 
-Eso significa que el modelo puede mantener un consumo moderado de memoria incluso cuando la ventana principal ya se cerró, lo cual no es ideal en equipos con poca RAM o recursos limitados.
+En sistemas con recursos limitados, especialmente equipos con baja disponibilidad de RAM, este comportamiento puede generar un consumo sostenido de memoria que resulta poco conveniente para el rendimiento general del sistema.
 
 ## Recomendación
 
