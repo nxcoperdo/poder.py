@@ -13,6 +13,12 @@ El proyecto está pensado para responder mejor a:
 
 Por ahora, el comportamiento está enfocado en ese uso y no en un asistente totalmente abierto a cualquier tema.
 
+## Aviso principal: uso educativo y responsabilidad del usuario
+
+Este asistente fue desarrollado exclusivamente con fines educativos y de aprendizaje, en particular para practicar lógica de programación con ciclos en Python. Su uso permitido se limita al estudio, la práctica guiada y el refuerzo de competencias técnicas.
+
+Queda expresamente prohibido utilizar esta herramienta para plagio, suplantación, fraude académico o cualquier forma de uso indebido en exámenes, evaluaciones o actividades oficiales. Los desarrolladores no se hacen responsables por sanciones, perjuicios o consecuencias académicas, disciplinarias, legales o de cualquier otra naturaleza derivadas del uso inapropiado por parte de los usuarios.
+
 ## Qué hace
 
 - `F7`: toma el texto del portapapeles y consulta a Ollama.
