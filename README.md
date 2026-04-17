@@ -1,6 +1,17 @@
 # AsistenteCajaPro
 
-Asistente flotante para Windows que lee el portapapeles y consulta Ollama con una hotkey global.
+Asistente flotante para Windows orientado actualmente a ayudar con **Python**, especialmente con ejercicios que usan **ciclos** y lógica de repetición.
+
+## Enfoque actual
+
+El proyecto está pensado para responder mejor a:
+
+- ejercicios de Python
+- estructuras repetitivas como `while` y `for`
+- menús por consola
+- corrección de errores de lógica en ciclos
+
+Por ahora, el comportamiento está enfocado en ese uso y no en un asistente totalmente abierto a cualquier tema.
 
 ## Qué hace
 
@@ -97,10 +108,27 @@ python Lenguaje.pyw
 - Si aparece `Error: Verifica Ollama`, confirma que Ollama esté instalado, abierto y que el modelo `llama3` esté descargado.
 - En algunos equipos, la hotkey global `keyboard` puede requerir ejecutar PowerShell o Python con permisos adecuados.
 
+## Operaciones a futuro
+
+Se creó la carpeta `operaciones a futuro` para dejar documentada la siguiente etapa del proyecto.
+
+La idea es que más adelante el asistente pueda pasar de un enfoque centrado solo en Python y ciclos a un modo más libre, capaz de responder sobre temas más amplios y no únicamente devolver código Python.
+
+Por ahora esa apertura futura queda solo como referencia y planificación.
+
 ## Estructura del proyecto
 
 - `Lenguaje.pyw`: aplicación principal
 - `requirements.txt`: dependencias Python
 - `README.md`: guía de instalación y uso
+- `operaciones a futuro/`: notas y planificación de expansión futura
+
+## Referencias y créditos
+
+Este proyecto integra **Ollama** como base para la ejecución local de modelos de lenguaje.
+
+El desarrollo técnico y la segmentación principal del script fueron realizados por **Alejandro Bautista**.
+
+Se reconoce también la contribución de **Nicolás Perdomo** en la concepción de mejoras de campo y evolución funcional, incluyendo ideas como el sistema de ocultar y mostrar la ventana, la orientación inicial de autoarranque en etapas anteriores y la proyección de las **operaciones a futuro**.
 
 
