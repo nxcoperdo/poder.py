@@ -19,6 +19,9 @@ Esta carpeta existe para dejar documentada la evolución prevista del proyecto.
 
 3. Evaluar builds personalizadas por cliente (watermark interno) para reforzar trazabilidad comercial sin romper el modelo de licencia actual.
 
+4. Definir estrategia de actualización para clientes actuales cuando se publique la versión libre (v2), manteniendo trazabilidad comercial y continuidad de soporte.
+   Esta línea nace como propuesta inicial y será consultada con los desarrolladores antes de cerrar el modelo final de migración, versiones y condiciones de actualización.
+
 ## Estado actual
 
 - El proyecto sigue enfocado en Python.
