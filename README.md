@@ -21,6 +21,7 @@ Los desarrolladores no se hacen responsables por sanciones, perjuicios o consecu
 - `F9`: vuelve a mostrar la ventana.
 - `F10`: cierra el programa.
 
+
 ## Licenciamiento comercial
 
 El sistema usa validacion remota para controlar distribucion del script.

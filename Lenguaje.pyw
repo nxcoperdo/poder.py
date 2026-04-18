@@ -139,6 +139,7 @@ class AsistenteCajaPro:
         # Reagenda el siguiente chequeo periodico.
         self.root.after(3600 * 1000, self.revalidar_licencia_periodica)
 
+
     def copiar_limpio(self, event):
         # Solo copia respuestas; evita copiar el texto inicial del sistema.
         txt = self.label.cget("text")
