@@ -61,14 +61,14 @@ ollama pull llama3
 4. Instalar dependencias del proyecto:
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder
+cd "TU_RUTA_DEL_PROYECTO"
 python -m pip install -r requirements.txt
 ```
 
 5. Ejecutar el asistente:
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder
+cd "TU_RUTA_DEL_PROYECTO"
 python Lenguaje.pyw
 ```
 
@@ -84,21 +84,21 @@ python Lenguaje.pyw
 ### 2) Dependencias de app
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder
+cd "TU_RUTA_DEL_PROYECTO"
 python -m pip install -r requirements.txt
 ```
 
 ### 3) Ejecutar desde codigo
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder
+cd "TU_RUTA_DEL_PROYECTO"
 python Lenguaje.pyw
 ```
 
 ## Servidor de licencias (obligatorio para activar)
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd "TU_RUTA_DEL_PROYECTO\licensing_server"
 python -m pip install -r requirements.txt
 powershell -ExecutionPolicy Bypass -File .\start_server.ps1
 ```
@@ -106,7 +106,7 @@ powershell -ExecutionPolicy Bypass -File .\start_server.ps1
 Si prefieres CMD:
 
 ```bat
-cd /d C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd /d "TU_RUTA_DEL_PROYECTO\licensing_server"
 start_server.cmd
 ```
 
@@ -125,14 +125,14 @@ Usa `licensing_server/admin_licencias.ps1`.
 Modo menu:
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd "TU_RUTA_DEL_PROYECTO\licensing_server"
 powershell -ExecutionPolicy Bypass -File .\start_admin.ps1
 ```
 
 Si prefieres CMD:
 
 ```bat
-cd /d C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd /d "TU_RUTA_DEL_PROYECTO\licensing_server"
 start_admin.cmd
 ```
 

@@ -10,7 +10,7 @@ Este servicio habilita activacion por dispositivo, verificacion periodica y revo
 ## Instalacion
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd "TU_RUTA_DEL_PROYECTO\licensing_server"
 python -m pip install -r requirements.txt
 ```
 
@@ -21,14 +21,14 @@ Usa el script guiado, asi no se desalinea la clave admin:
 ### Desde PowerShell
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd "TU_RUTA_DEL_PROYECTO\licensing_server"
 powershell -ExecutionPolicy Bypass -File .\start_server.ps1
 ```
 
 ### Desde CMD
 
 ```bat
-cd /d C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd /d "TU_RUTA_DEL_PROYECTO\licensing_server"
 start_server.cmd
 ```
 
@@ -42,14 +42,14 @@ El script pedira:
 ### Desde PowerShell
 
 ```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd "TU_RUTA_DEL_PROYECTO\licensing_server"
 powershell -ExecutionPolicy Bypass -File .\start_admin.ps1
 ```
 
 ### Desde CMD
 
 ```bat
-cd /d C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+cd /d "TU_RUTA_DEL_PROYECTO\licensing_server"
 start_admin.cmd
 ```
 
