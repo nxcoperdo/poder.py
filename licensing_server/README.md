@@ -14,92 +14,90 @@ cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
 python -m pip install -r requirements.txt
 ```
 
-## Variables recomendadas
+## Arranque recomendado (sin errores de clave)
 
-```powershell
-$env:LICENSE_SECRET = "cambia-esta-clave-secreta"
-$env:LICENSE_ADMIN_KEY = "cambia-esta-admin-key"
-$env:LICENSE_CHECK_HOURS = "24"
-$env:LICENSE_GRACE_HOURS = "72"
-```
+Usa el script guiado, asi no se desalinea la clave admin:
 
-Recomendacion: usar valores fuertes y no compartirlos con clientes.
-
-## Ejecucion
+### Desde PowerShell
 
 ```powershell
 cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
-python -m uvicorn app:app --host 0.0.0.0 --port 8008
+powershell -ExecutionPolicy Bypass -File .\start_server.ps1
 ```
+
+### Desde CMD
+
+```bat
+cd /d C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+start_server.cmd
+```
+
+El script pedira:
+
+- `LICENSE_SECRET`
+- `LICENSE_ADMIN_KEY`
+
+## Panel admin recomendado
+
+### Desde PowerShell
+
+```powershell
+cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+powershell -ExecutionPolicy Bypass -File .\start_admin.ps1
+```
+
+### Desde CMD
+
+```bat
+cd /d C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+start_admin.cmd
+```
+
+El panel usa `admin_licencias.ps1` y ahora valida conectividad (`/health`) antes de operar.
 
 ## Flujo operativo del vendedor
 
-1. Levantar servidor de licencias.
-2. Crear licencia para cada cliente.
-3. Entregar `Lenguaje.pyw` + `requirements.txt` + licencia (no entregar backend).
-4. Revocar por licencia o dispositivo ante uso indebido.
+1. Levantar servidor con `start_server.ps1`.
+2. Abrir panel con `start_admin.ps1`.
+3. Crear licencia por cliente.
+4. Entregar `Lenguaje.pyw` + `requirements.txt` + carpeta `licensing/` + licencia.
+5. Revocar por licencia o dispositivo si hay uso indebido.
 
-## Crear una licencia (admin)
-
-```powershell
-$headers = @{ "x-admin-key" = "cambia-esta-admin-key" }
-$body = @{ customer_name = "Cliente Demo"; max_devices = 1; expires_days = 365 } | ConvertTo-Json
-Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8008/admin/create_license" -Headers $headers -ContentType "application/json" -Body $body
-```
-
-## Revocar una licencia
-
-```powershell
-$headers = @{ "x-admin-key" = "cambia-esta-admin-key" }
-Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8008/admin/revoke/license/ACP-XXXXXXXX" -Headers $headers
-```
-
-## Revocar un dispositivo
-
-```powershell
-$headers = @{ "x-admin-key" = "cambia-esta-admin-key" }
-Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8008/admin/revoke/device/ACP-XXXXXXXX/device-id-a-revocar" -Headers $headers
-```
-
-## Script admin con menu
-
-Tambien puedes administrar licencias con `admin_licencias.ps1`.
-
-### Modo menu (interactivo)
-
-```powershell
-cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key"
-```
-
-### Modo comando (no interactivo)
-
-Health:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action health -BaseUrl "http://127.0.0.1:8008"
-```
+## Comandos directos (opcional)
 
 Crear licencia:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action create -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -CustomerName "Cliente Demo" -MaxDevices 1 -ExpiresDays 365
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action create -BaseUrl "http://127.0.0.1:8008" -AdminKey "TU_ADMIN_KEY_REAL" -CustomerName "Cliente Demo" -MaxDevices 1 -ExpiresDays 365
 ```
 
-Revocar licencia completa:
+Revocar licencia:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-license -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -LicenseKey "ACP-XXXXXXXX"
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-license -BaseUrl "http://127.0.0.1:8008" -AdminKey "TU_ADMIN_KEY_REAL" -LicenseKey "ACP-XXXXXXXX"
 ```
 
-Revocar un dispositivo:
+Revocar dispositivo:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-device -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -LicenseKey "ACP-XXXXXXXX" -DeviceId "device-id-a-revocar"
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-device -BaseUrl "http://127.0.0.1:8008" -AdminKey "TU_ADMIN_KEY_REAL" -LicenseKey "ACP-XXXXXXXX" -DeviceId "device-id-a-revocar"
 ```
+
+## Error 403 (Prohibido): causa y solucion
+
+Si sale `403` al crear/revocar licencias:
+
+1. La `-AdminKey` del panel no coincide con `LICENSE_ADMIN_KEY` del servidor.
+2. Reinicia el servidor despues de cambiar variables.
+3. No uses placeholders como `tu-admin-key`; usa tu clave real.
+
+## Nota importante sobre shell
+
+- `Set-ExecutionPolicy`, `Test-Path`, `Remove-Item` son comandos de **PowerShell**.
+- Si estas en `cmd.exe`, usa los wrappers `.cmd` o abre PowerShell.
 
 ## Nota para soporte
 
 - El cliente final usa `Lenguaje.pyw`, Ollama, Python y una licencia valida.
-- `licensing_server/` y claves administrativas se quedan del lado del vendedor.
+- `licensing_server/`, `LICENSE_SECRET` y `LICENSE_ADMIN_KEY` se quedan del lado del vendedor.
 

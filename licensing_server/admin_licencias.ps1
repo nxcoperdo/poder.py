@@ -13,6 +13,14 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Normalize-BaseUrl {
+    param([string]$Url)
+    if (-not $Url) {
+        return "http://127.0.0.1:8008"
+    }
+    return $Url.Trim().TrimEnd("/")
+}
+
 function Get-AdminHeaders {
     param([string]$Key)
     return @{ "x-admin-key" = $Key }
@@ -51,6 +59,16 @@ function Invoke-LicenseApi {
             }
         }
 
+        if ($status -eq 403) {
+            Write-Host "Error API (status=403): acceso denegado." -ForegroundColor Red
+            Write-Host "Verifica que -AdminKey sea EXACTAMENTE la misma que LICENSE_ADMIN_KEY del servidor." -ForegroundColor Yellow
+            Write-Host "Si cambiaste variables, reinicia el servidor de licencias." -ForegroundColor Yellow
+            if ($detail) {
+                Write-Host "Detalle: $detail" -ForegroundColor DarkYellow
+            }
+            exit 1
+        }
+
         Write-Host "Error API (status=$status): $detail" -ForegroundColor Red
         exit 1
     }
@@ -59,8 +77,14 @@ function Invoke-LicenseApi {
 function Ensure-AdminKey {
     param([string]$Key)
 
-    if (-not $Key) {
+    $normalized = ""
+    if ($Key) {
+        $normalized = $Key.Trim()
+    }
+
+    if (-not $normalized) {
         $entered = Read-Host "Ingresa LICENSE_ADMIN_KEY"
+        $entered = $entered.Trim()
         if (-not $entered) {
             Write-Host "No se ingreso clave administrativa." -ForegroundColor Red
             exit 1
@@ -68,7 +92,23 @@ function Ensure-AdminKey {
         return $entered
     }
 
-    return $Key
+    return $normalized
+}
+
+function Ensure-ServerHealth {
+    param([string]$Url)
+    try {
+        $result = Invoke-RestMethod -Method Get -Uri "$Url/health"
+        if ($result.status -ne "ok") {
+            Write-Host "El servidor no respondio status=ok en /health." -ForegroundColor Red
+            exit 1
+        }
+    }
+    catch {
+        Write-Host "No se pudo conectar al servidor de licencias en $Url" -ForegroundColor Red
+        Write-Host "Levanta el servidor antes de usar el panel." -ForegroundColor Yellow
+        exit 1
+    }
 }
 
 function Show-Health {
@@ -184,6 +224,8 @@ function Show-Menu {
 }
 
 if ($Action -eq "menu") {
+    $BaseUrl = Normalize-BaseUrl -Url $BaseUrl
+    Ensure-ServerHealth -Url $BaseUrl
     $admin = Ensure-AdminKey -Key $AdminKey
 
     while ($true) {
@@ -203,20 +245,27 @@ if ($Action -eq "menu") {
 
 switch ($Action) {
     "health" {
+        $BaseUrl = Normalize-BaseUrl -Url $BaseUrl
         Show-Health -Url $BaseUrl
         exit 0
     }
     "create" {
+        $BaseUrl = Normalize-BaseUrl -Url $BaseUrl
+        Ensure-ServerHealth -Url $BaseUrl
         $admin = Ensure-AdminKey -Key $AdminKey
         Create-License -Url $BaseUrl -Key $admin -Name $CustomerName -Devices $MaxDevices -Days $ExpiresDays
         exit 0
     }
     "revoke-license" {
+        $BaseUrl = Normalize-BaseUrl -Url $BaseUrl
+        Ensure-ServerHealth -Url $BaseUrl
         $admin = Ensure-AdminKey -Key $AdminKey
         Revoke-License -Url $BaseUrl -Key $admin -TargetLicense $LicenseKey
         exit 0
     }
     "revoke-device" {
+        $BaseUrl = Normalize-BaseUrl -Url $BaseUrl
+        Ensure-ServerHealth -Url $BaseUrl
         $admin = Ensure-AdminKey -Key $AdminKey
         Revoke-Device -Url $BaseUrl -Key $admin -TargetLicense $LicenseKey -TargetDevice $DeviceId
         exit 0

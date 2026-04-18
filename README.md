@@ -99,15 +99,20 @@ python Lenguaje.pyw
 ```powershell
 cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
 python -m pip install -r requirements.txt
-$env:LICENSE_SECRET = "cambia-esta-clave-secreta"
-$env:LICENSE_ADMIN_KEY = "cambia-esta-admin-key"
-python -m uvicorn app:app --host 0.0.0.0 --port 8008
+powershell -ExecutionPolicy Bypass -File .\start_server.ps1
 ```
 
-Crear licencia por API:
+Si prefieres CMD:
+
+```bat
+cd /d C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+start_server.cmd
+```
+
+Crear licencia por API (opcional):
 
 ```powershell
-$headers = @{ "x-admin-key" = "cambia-esta-admin-key" }
+$headers = @{ "x-admin-key" = "TU_ADMIN_KEY_REAL" }
 $body = @{ customer_name = "Cliente Demo"; max_devices = 1; expires_days = 365 } | ConvertTo-Json
 Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8008/admin/create_license" -Headers $headers -ContentType "application/json" -Body $body
 ```
@@ -120,16 +125,29 @@ Modo menu:
 
 ```powershell
 cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key"
+powershell -ExecutionPolicy Bypass -File .\start_admin.ps1
+```
+
+Si prefieres CMD:
+
+```bat
+cd /d C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+start_admin.cmd
 ```
 
 Modo no interactivo:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action create -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -CustomerName "Cliente Demo" -MaxDevices 1 -ExpiresDays 365
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-license -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -LicenseKey "ACP-XXXXXXXX"
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-device -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -LicenseKey "ACP-XXXXXXXX" -DeviceId "device-id-a-revocar"
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action create -BaseUrl "http://127.0.0.1:8008" -AdminKey "TU_ADMIN_KEY_REAL" -CustomerName "Cliente Demo" -MaxDevices 1 -ExpiresDays 365
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-license -BaseUrl "http://127.0.0.1:8008" -AdminKey "TU_ADMIN_KEY_REAL" -LicenseKey "ACP-XXXXXXXX"
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-device -BaseUrl "http://127.0.0.1:8008" -AdminKey "TU_ADMIN_KEY_REAL" -LicenseKey "ACP-XXXXXXXX" -DeviceId "device-id-a-revocar"
 ```
+
+## Solucion rapida de errores comunes
+
+- `403 Prohibido` al crear licencias: la clave del panel no coincide con `LICENSE_ADMIN_KEY` del servidor.
+- Comandos como `Set-ExecutionPolicy`/`Test-Path` no se reconocen: estabas en `cmd.exe`, no en PowerShell.
+- Solucion simple: usa `start_server.cmd` y `start_admin.cmd` desde CMD.
 
 ## Entrega comercial
 
@@ -139,6 +157,7 @@ Contenido de entrega al cliente:
 
 - `Lenguaje.pyw`
 - `requirements.txt`
+- `licensing/`
 - `ENTREGA/INSTRUCCIONES_CLIENTE.md`
 - `ENTREGA/LICENCIA_CLIENTE.txt`
 
@@ -155,6 +174,10 @@ No compartir con clientes:
 - `licensing/`: cliente local de licencias
 - `licensing_server/`: API de activacion/revocacion
 - `licensing_server/admin_licencias.ps1`: panel administrativo
+- `licensing_server/start_server.ps1`: arranque guiado de servidor
+- `licensing_server/start_admin.ps1`: arranque guiado de panel
+- `licensing_server/start_server.cmd`: wrapper para CMD
+- `licensing_server/start_admin.cmd`: wrapper para CMD
 - `ENTREGA/`: documentos para entrega comercial
 - `operaciones a futuro/`: hoja de ruta
 

@@ -6,6 +6,7 @@ Gracias por adquirir AsistenteCajaPro.
 
 - `Lenguaje.pyw`
 - `requirements.txt`
+- `licensing/`
 - `INSTRUCCIONES_CLIENTE.md`
 - `LICENCIA_CLIENTE.txt`
 
@@ -16,6 +17,7 @@ Gracias por adquirir AsistenteCajaPro.
 - Ollama instalado
 - Modelo `llama3` descargado
 - Conexion a internet para activar licencia
+- URL del servidor de licencias entregada por el vendedor
 
 ## Instalacion
 
@@ -26,19 +28,36 @@ Gracias por adquirir AsistenteCajaPro.
 ollama pull llama3
 ```
 
-3. Instalar dependencias del proyecto:
+3. Abrir una terminal en la carpeta de entrega e instalar dependencias:
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
 
-4. Ejecutar:
+4. Verificar que `Lenguaje.pyw` y la carpeta `licensing/` esten en la misma carpeta.
+
+5. Configurar la URL del servidor de licencias (si el vendedor te dio una distinta a localhost):
+
+```powershell
+$env:LICENSE_API_URL = "http://127.0.0.1:8008"
+```
+
+6. Ejecutar:
 
 ```powershell
 python Lenguaje.pyw
 ```
 
-5. Ingresar la licencia cuando el sistema la solicite
+7. Ingresar la licencia cuando el sistema la solicite
+
+## Nota sobre terminal
+
+- Si usas `cmd.exe`, puedes ejecutar tambien:
+
+```bat
+set LICENSE_API_URL=http://127.0.0.1:8008
+python Lenguaje.pyw
+```
 
 ## Uso rapido
 
