@@ -2,6 +2,12 @@
 
 Gracias por adquirir AsistenteCajaPro.
 
+## Aviso principal: uso educativo y responsabilidad del usuario
+
+Este asistente fue desarrollado con fines educativos y de aprendizaje. No esta permitido su uso para plagio, suplantacion, fraude academico o cualquier actividad indebida en evaluaciones.
+
+Los desarrolladores no se hacen responsables por sanciones, perjuicios o consecuencias academicas, disciplinarias o legales derivadas del uso inapropiado de la herramienta.
+
 ## Contenido de la entrega
 
 - `Lenguaje.pyw`
@@ -73,4 +79,12 @@ Si tienes problemas de activacion o licencia, contacta al vendedor con:
 - Captura del error
 - Fecha y hora del intento
 - Nombre de cliente y licencia
+
+## Referencias y creditos
+
+Este proyecto integra **Ollama** para ejecucion local de modelos de lenguaje.
+
+El desarrollo tecnico y segmentacion principal del script fueron realizados por **Alejandro Bautista**.
+
+Se reconoce la contribucion integral de **Nicolas Perdomo** como responsable de la implementacion practica y consolidacion operativa del proyecto, incluyendo la evolucion funcional del asistente (ocultar/mostrar), la implementacion del licenciamiento por dispositivo con activacion online, verificacion periodica y revocacion remota, la creacion del panel administrativo de licencias, la actualizacion completa de la documentacion tecnica y comercial, y el soporte de operacion para instalacion, venta y despliegue.
 
