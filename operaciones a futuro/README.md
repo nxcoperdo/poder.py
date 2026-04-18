@@ -5,10 +5,10 @@ Esta carpeta existe para dejar documentada la evolución prevista del proyecto.
 ## Estado actual resumido
 
 - El proyecto está activo con licenciamiento por dispositivo y validación remota.
-- La distribución comercial actual se realiza mediante `AsistenteCajaPro.exe`.
+- La distribucion comercial actual se realiza con `Lenguaje.pyw`.
 - La instalación quedó separada por perfil:
-  - cliente final (solo `.exe` + Ollama + licencia)
-  - vendedor/desarrollador (código fuente + servidor de licencias)
+  - cliente final (`Lenguaje.pyw` + `requirements.txt` + Ollama + licencia)
+  - vendedor/desarrollador (codigo fuente + servidor de licencias)
 
 ## Objetivos a futuro
 
@@ -17,7 +17,7 @@ Esta carpeta existe para dejar documentada la evolución prevista del proyecto.
 2. Se plantea implementar la conmutación manual del esquema cromático del overlay, con el objetivo de optimizar la legibilidad y la accesibilidad visual en entornos con fondos claros y oscuros.
    Este tema se consultará entre desarrolladores y usuarios para definir la mejor forma de implementarlo.
 
-3. Evaluar builds personalizadas por cliente (watermark interno) para reforzar trazabilidad comercial sin romper el modelo de licencia actual.
+3. Evaluar un paquete instalador para el flujo `.pyw` (sin empaquetado `.exe`) para facilitar despliegue sin romper el modelo de licencia actual.
 
 4. Definir estrategia de actualización para clientes actuales cuando se publique la versión libre (v2), manteniendo trazabilidad comercial y continuidad de soporte.
    Esta línea nace como propuesta inicial y será consultada con los desarrolladores antes de cerrar el modelo final de migración, versiones y condiciones de actualización.

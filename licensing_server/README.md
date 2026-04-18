@@ -1,6 +1,6 @@
 # Servidor de licencias (MVP)
 
-Este servicio habilita activación por dispositivo, verificación periódica y revocación remota para `Lenguaje.pyw` y `AsistenteCajaPro.exe`.
+Este servicio habilita activacion por dispositivo, verificacion periodica y revocacion remota para `Lenguaje.pyw`.
 
 ## Requisitos
 
@@ -23,7 +23,7 @@ $env:LICENSE_CHECK_HOURS = "24"
 $env:LICENSE_GRACE_HOURS = "72"
 ```
 
-Recomendación: usar valores fuertes y no compartirlos con clientes.
+Recomendacion: usar valores fuertes y no compartirlos con clientes.
 
 ## Ejecucion
 
@@ -36,7 +36,7 @@ python -m uvicorn app:app --host 0.0.0.0 --port 8008
 
 1. Levantar servidor de licencias.
 2. Crear licencia para cada cliente.
-3. Entregar `.exe` + licencia (no entregar backend).
+3. Entregar `Lenguaje.pyw` + `requirements.txt` + licencia (no entregar backend).
 4. Revocar por licencia o dispositivo ante uso indebido.
 
 ## Crear una licencia (admin)
@@ -100,6 +100,6 @@ powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-de
 
 ## Nota para soporte
 
-- El cliente final solo necesita `AsistenteCajaPro.exe`, Ollama y una licencia válida.
-- Python, `requirements.txt`, backend y claves administrativas se quedan del lado del vendedor.
+- El cliente final usa `Lenguaje.pyw`, Ollama, Python y una licencia valida.
+- `licensing_server/` y claves administrativas se quedan del lado del vendedor.
 

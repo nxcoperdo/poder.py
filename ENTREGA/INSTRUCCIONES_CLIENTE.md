@@ -4,13 +4,15 @@ Gracias por adquirir AsistenteCajaPro.
 
 ## Contenido de la entrega
 
-- `AsistenteCajaPro.exe`
+- `Lenguaje.pyw`
+- `requirements.txt`
 - `INSTRUCCIONES_CLIENTE.md`
 - `LICENCIA_CLIENTE.txt`
 
 ## Requisitos
 
 - Windows 10/11
+- Python 3.10+
 - Ollama instalado
 - Modelo `llama3` descargado
 - Conexion a internet para activar licencia
@@ -24,8 +26,19 @@ Gracias por adquirir AsistenteCajaPro.
 ollama pull llama3
 ```
 
-3. Ejecutar `AsistenteCajaPro.exe`
-4. Ingresar la licencia cuando el sistema la solicite
+3. Instalar dependencias del proyecto:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+4. Ejecutar:
+
+```powershell
+python Lenguaje.pyw
+```
+
+5. Ingresar la licencia cuando el sistema la solicite
 
 ## Uso rapido
 

@@ -4,8 +4,7 @@ Este archivo quedó solo como referencia histórica. El proyecto ya no usa autoa
 
 ## Estado actual
 
-- La aplicación comercial actual se entrega como `AsistenteCajaPro.exe`.
-- La versión de código fuente se mantiene en `Lenguaje.pyw`.
+- La aplicacion actual se ejecuta como script en `Lenguaje.pyw`.
 - La documentación activa está en `README.md`.
 - Las hotkeys se usan con la app abierta manualmente (`F7`, `F8`, `F9`, `F10`).
 
@@ -23,7 +22,7 @@ No uses los scripts de autoarranque anteriores.
 
 Consulta `README.md` para:
 
-- instalación de cliente final con `.exe`
+- instalacion de cliente final con `Lenguaje.pyw`
 - instalación de vendedor/desarrollador
 - operación del panel de licencias y revocaciones
 

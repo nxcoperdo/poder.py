@@ -1,9 +1,0 @@
-cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
-$env:LICENSE_SECRET = "tu-secreto"
-$env:LICENSE_ADMIN_KEY = "tu-admin-key"
-python -m uvicorn app:app --host 127.0.0.1 --port 8008
-
-
-
-cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
-powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -BaseUrl "http://127.0.0.1:8008" -AdminKey "tu-admin-key"
