@@ -2,12 +2,22 @@
 
 Esta carpeta existe para dejar documentada la evolución prevista del proyecto.
 
-## Objetivos a  futuro
+## Estado actual resumido
+
+- El proyecto está activo con licenciamiento por dispositivo y validación remota.
+- La distribución comercial actual se realiza mediante `AsistenteCajaPro.exe`.
+- La instalación quedó separada por perfil:
+  - cliente final (solo `.exe` + Ollama + licencia)
+  - vendedor/desarrollador (código fuente + servidor de licencias)
+
+## Objetivos a futuro
 
 1. A futuro, la idea es que el asistente deje de responder solo con código Python y pueda funcionar de forma más abierta, para responder distintos tipos de preguntas y temas.
 
 2. Se plantea implementar la conmutación manual del esquema cromático del overlay, con el objetivo de optimizar la legibilidad y la accesibilidad visual en entornos con fondos claros y oscuros.
-este tema se consultara entre desarrolladores y usuarios para definir la mejor forma de implementarlo.
+   Este tema se consultará entre desarrolladores y usuarios para definir la mejor forma de implementarlo.
+
+3. Evaluar builds personalizadas por cliente (watermark interno) para reforzar trazabilidad comercial sin romper el modelo de licencia actual.
 
 ## Estado actual
 
@@ -17,5 +27,7 @@ este tema se consultara entre desarrolladores y usuarios para definir la mejor f
 
 ## Nota
 
-No modifica el comportamiento del programa. Solo sirve como referencia documental para el siguiente paso del proyecto.
+No modifica el comportamiento del programa. Solo sirve como referencia documental para los siguientes pasos del proyecto.
+
+Para instrucciones de instalación y operación actualizada, consultar `README.md`.
 

@@ -1,0 +1,4 @@
+# Dependencias minimas del servidor de licencias.
+fastapi
+uvicorn
+

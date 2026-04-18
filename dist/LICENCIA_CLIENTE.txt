@@ -1,0 +1,11 @@
+Cliente: ______________________________
+Licencia: ACP-_________________________
+Fecha de emision: ____/____/___________
+Vigencia (dias): _______________________
+Maximo de dispositivos: ________________
+
+Terminos de uso:
+- Licencia individual y no transferible.
+- Prohibida la redistribucion del ejecutable y/o licencia.
+- El uso indebido puede causar revocacion remota.
+

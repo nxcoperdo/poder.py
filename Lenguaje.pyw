@@ -1,9 +1,13 @@
 import tkinter as tk
+from tkinter import messagebox
+from tkinter import simpledialog
 import threading
 import requests
 import keyboard
 import pyperclip
 import os
+
+from licensing import LicenseController
 
 # Script flotante que lee el portapapeles y consulta Ollama con una hotkey global.
 # ==============================
@@ -14,6 +18,49 @@ TECLA_LECTURA = "F7"
 TECLA_OCULTAR = "F8"
 TECLA_MOSTRAR = "F9"
 TECLA_SALIR = "F10"
+# Endpoint del servidor de licencias (se puede cambiar por variable de entorno).
+LICENSE_API_URL = os.getenv("LICENSE_API_URL", "http://127.0.0.1:8008")
+# Frecuencia objetivo de chequeo remoto de licencia (en horas).
+LICENSE_CHECK_HOURS = int(os.getenv("LICENSE_CHECK_HOURS", "24"))
+# Ventana offline permitida si no hay conexion con el servidor de licencias.
+LICENSE_GRACE_HOURS = int(os.getenv("LICENSE_GRACE_HOURS", "72"))
+
+
+def pedir_licencia(root):
+    # Dialogo de activacion mostrado solo cuando no hay licencia valida local.
+    return simpledialog.askstring(
+        "Activacion de licencia",
+        "Ingresa tu licencia para activar AsistenteCajaPro:",
+        parent=root,
+    )
+
+
+def validar_licencia_inicio():
+    # Ventana oculta temporal para usar cuadros de dialogo antes de abrir el overlay.
+    gate = tk.Tk()
+    gate.withdraw()
+
+    # Controlador central de activacion/revalidacion.
+    controller = LicenseController(
+        api_base_url=LICENSE_API_URL,
+        check_hours=LICENSE_CHECK_HOURS,
+        grace_hours=LICENSE_GRACE_HOURS,
+    )
+
+    # Intenta validar estado local o activar con clave si no existe licencia valida.
+    ok, mensaje = controller.ensure_valid(lambda: pedir_licencia(gate))
+    if not ok:
+        # Si falla la validacion, se aborta el inicio de la app.
+        messagebox.showerror("Licencia", mensaje, parent=gate)
+        gate.destroy()
+        return None
+
+    # Avisa cuando entra en modo gracia (uso temporal sin conexion).
+    if "gracia" in mensaje.lower():
+        messagebox.showwarning("Licencia", mensaje, parent=gate)
+
+    gate.destroy()
+    return controller
 
 def preguntar_ollama(texto):
     try:
@@ -33,7 +80,9 @@ def preguntar_ollama(texto):
 # INTERFAZ
 # ==============================
 class AsistenteCajaPro:
-    def __init__(self):
+    def __init__(self, license_controller):
+        # Se guarda para revalidaciones periodicas durante la ejecucion.
+        self.license_controller = license_controller
         # Ventana sin bordes y siempre visible para usarla como overlay.
         self.root = tk.Tk()
         self.root.overrideredirect(True)
@@ -60,6 +109,8 @@ class AsistenteCajaPro:
         keyboard.add_hotkey(TECLA_SALIR, self.salir, suppress=True)
         self.label.bind("<Button-1>", self.atrapa)
         self.label.bind("<B1-Motion>", self.mueve)
+        # Programa chequeo periodico de licencia para detectar revocacion remota.
+        self.root.after(3600 * 1000, self.revalidar_licencia_periodica)
 
     def atrapa(self, e): self.x, self.y = e.x, e.y
     def mueve(self, e): self.root.geometry(f"+{e.x_root-self.x}+{e.y_root-self.y}")
@@ -75,6 +126,18 @@ class AsistenteCajaPro:
 
     def salir(self):
         os._exit(0)
+
+    def revalidar_licencia_periodica(self):
+        # Revalida en segundo plano sin pedir clave nuevamente al usuario.
+        ok, mensaje = self.license_controller.revalidate_non_interactive()
+        if not ok:
+            # Si el servidor invalida la licencia, se cierra para impedir uso no autorizado.
+            messagebox.showerror("Licencia", mensaje)
+            self.salir()
+            return
+
+        # Reagenda el siguiente chequeo periodico.
+        self.root.after(3600 * 1000, self.revalidar_licencia_periodica)
 
     def copiar_limpio(self, event):
         # Solo copia respuestas; evita copiar el texto inicial del sistema.
@@ -92,7 +155,12 @@ class AsistenteCajaPro:
         self.root.after(0, lambda: self.label.config(text=res))
 
 if __name__ == "__main__":
-    app = AsistenteCajaPro()
+    # Bloquea el inicio si no hay licencia valida.
+    controller = validar_licencia_inicio()
+    if not controller:
+        os._exit(1)
+
+    app = AsistenteCajaPro(controller)
     app.root.mainloop()
 
 

@@ -1,140 +1,180 @@
 # AsistenteCajaPro
 
-Asistente flotante para Windows orientado actualmente a ayudar con **Python**, especialmente con ejercicios que usan **ciclos** y lógica de repetición.
-
-## Enfoque actual
-
-El proyecto está pensado para responder mejor a:
-
-- ejercicios de Python
-- estructuras repetitivas como `while` y `for`
-- menús por consola
-- corrección de errores de lógica en ciclos
-
-Por ahora, el comportamiento está enfocado en ese uso y no en un asistente totalmente abierto a cualquier tema.
+Asistente flotante para Windows orientado actualmente a aprendizaje de **Python con ciclos** y lógica de repetición.
 
 ## Aviso principal: uso educativo y responsabilidad del usuario
 
-Este asistente fue desarrollado exclusivamente con fines educativos y de aprendizaje, en particular para practicar lógica de programación con ciclos en Python. Su uso permitido se limita al estudio, la práctica guiada y el refuerzo de competencias técnicas.
+Este asistente fue desarrollado con fines educativos y de aprendizaje. No está permitido su uso para plagio, suplantación, fraude académico o cualquier actividad indebida en evaluaciones.
 
-Queda expresamente prohibido utilizar esta herramienta para plagio, suplantación, fraude académico o cualquier forma de uso indebido en exámenes, evaluaciones o actividades oficiales. Los desarrolladores no se hacen responsables por sanciones, perjuicios o consecuencias académicas, disciplinarias, legales o de cualquier otra naturaleza derivadas del uso inapropiado por parte de los usuarios.
+Los desarrolladores no se hacen responsables por sanciones, perjuicios o consecuencias académicas, disciplinarias o legales derivadas del uso inapropiado de la herramienta.
 
-## Qué hace
+## Cambios documentados en esta versión
 
-- `F7`: toma el texto del portapapeles y consulta a Ollama.
+- Se implementó licenciamiento por dispositivo con activación online.
+- Se agregó verificación periódica de licencia y modo gracia offline.
+- Se agregó revocación remota por licencia o por dispositivo.
+- Se añadió panel de administración en `licensing_server/admin_licencias.ps1`.
+- Se preparó carpeta de entrega comercial en `entrega final/`.
+
+## Atajos de la aplicación
+
+- `F7`: consulta con el texto del portapapeles.
 - `F8`: oculta la ventana.
 - `F9`: vuelve a mostrar la ventana.
 - `F10`: cierra el programa.
 
-## Requisitos
+## Licenciamiento comercial
 
-- Windows 10 o Windows 11
-- Python 3.10 o superior
-- Ollama instalado y funcionando en `http://localhost:11434`
-- Conexión local al servicio de Ollama
+El sistema actual usa validación remota para controlar distribución.
 
-## Librerías de Python
+- Activación obligatoria con clave de licencia.
+- Licencia asociada al equipo (huella de dispositivo).
+- Revalidación periódica (default: `24` horas).
+- Gracia offline configurable (default: `72` horas).
+- Revocación remota por licencia o por equipo.
 
-Las dependencias del proyecto están en `requirements.txt`:
+Variables de entorno del cliente:
 
-- `requests`
-- `keyboard`
-- `pyperclip`
+- `LICENSE_API_URL` (default: `http://127.0.0.1:8008`)
+- `LICENSE_CHECK_HOURS` (default: `24`)
+- `LICENSE_GRACE_HOURS` (default: `72`)
 
-## Instalación paso a paso
+## Instalación para cliente final (compra)
 
-### 1) Instalar Python
+Si entregas el `AsistenteCajaPro.exe`, el cliente **no necesita instalar Python ni librerías** del proyecto.
 
-Si no lo tienes instalado:
+### Requisitos del cliente
 
-1. Descarga Python desde https://www.python.org/downloads/
-2. Durante la instalación marca **Add Python to PATH**
-3. Verifica en PowerShell:
+- Windows 10/11
+- Ollama instalado
+- Modelo `llama3` descargado
+- Conexión a internet para activación de licencia
 
-```powershell
-python --version
-pip --version
-```
+### Pasos del cliente
 
-### 2) Instalar Ollama
-
-1. Descarga Ollama para Windows desde:
-   https://ollama.com/download
-2. Ejecuta el instalador y completa la instalación
-3. Abre una terminal y verifica que esté disponible:
-
-```powershell
-ollama --version
-```
-
-4. Descarga el modelo que usa el script:
+1. Instalar Ollama desde https://ollama.com/download
+2. Descargar modelo:
 
 ```powershell
 ollama pull llama3
 ```
 
-5. Asegúrate de que Ollama esté corriendo antes de usar `Lenguaje.pyw`.
-   Si hace falta, abre la app de Ollama o ejecuta el servicio local.
+3. Ejecutar `AsistenteCajaPro.exe`
+4. Ingresar la licencia cuando la aplicación lo solicite
 
-### 3) Instalar dependencias del proyecto
+## Instalación para vendedor/desarrollador (código fuente)
 
-En la carpeta del proyecto ejecuta:
+### 1) Requisitos
+
+- Python 3.10+
+- Ollama instalado y corriendo en `http://localhost:11434`
+
+### 2) Dependencias de app
 
 ```powershell
-pip install -r requirements.txt
+cd C:\Users\ASUS\OneDrive\Desktop\poder
+python -m pip install -r requirements.txt
 ```
 
-Si prefieres usar un entorno virtual:
+### 3) Ejecutar desde código
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-### 4) Ejecutar el asistente
-
-Desde la carpeta del proyecto:
-
-```powershell
+cd C:\Users\ASUS\OneDrive\Desktop\poder
 python Lenguaje.pyw
 ```
 
-## Uso
+## Servidor de licencias (obligatorio para activar)
 
-1. Abre `Lenguaje.pyw`.
-2. Copia texto al portapapeles.
-3. Pulsa `F7` para consultar a Ollama.
-4. Usa `F8` para esconder la ventana y `F9` para volver a verla.
-5. Usa `F10` para salir.
+```powershell
+cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+python -m pip install -r requirements.txt
+$env:LICENSE_SECRET = "cambia-esta-clave-secreta"
+$env:LICENSE_ADMIN_KEY = "cambia-esta-admin-key"
+python -m uvicorn app:app --host 0.0.0.0 --port 8008
+```
 
-## Notas
+Crear licencia por API:
 
-- El script espera que Ollama responda en `http://localhost:11434/api/generate`.
-- Si aparece `Error: Verifica Ollama`, confirma que Ollama esté instalado, abierto y que el modelo `llama3` esté descargado.
-- En algunos equipos, la hotkey global `keyboard` puede requerir ejecutar PowerShell o Python con permisos adecuados.
+```powershell
+$headers = @{ "x-admin-key" = "cambia-esta-admin-key" }
+$body = @{ customer_name = "Cliente Demo"; max_devices = 1; expires_days = 365 } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8008/admin/create_license" -Headers $headers -ContentType "application/json" -Body $body
+```
 
-## Operaciones a futuro
+## Panel de ventas y revocaciones
 
-Se creó la carpeta `operaciones a futuro` para dejar documentada la siguiente etapa del proyecto.
+Usa `licensing_server/admin_licencias.ps1`.
 
-La idea es que más adelante el asistente pueda pasar de un enfoque centrado solo en Python y ciclos a un modo más libre, capaz de responder sobre temas más amplios y no únicamente devolver código Python.
+Modo menú:
 
-Por ahora esa apertura futura queda solo como referencia y planificación.
+```powershell
+cd C:\Users\ASUS\OneDrive\Desktop\poder\licensing_server
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key"
+```
+
+Modo no interactivo:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action create -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -CustomerName "Cliente Demo" -MaxDevices 1 -ExpiresDays 365
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-license -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -LicenseKey "ACP-XXXXXXXX"
+powershell -ExecutionPolicy Bypass -File .\admin_licencias.ps1 -Action revoke-device -BaseUrl "http://127.0.0.1:8008" -AdminKey "cambia-esta-admin-key" -LicenseKey "ACP-XXXXXXXX" -DeviceId "device-id-a-revocar"
+```
+
+## Build de ejecutable para entrega
+
+Build automática:
+
+```powershell
+cd C:\Users\ASUS\OneDrive\Desktop\poder
+powershell -ExecutionPolicy Bypass -File .\build\build.ps1
+```
+
+Si aparece error de `pip` no reconocido, usar build manual:
+
+```powershell
+cd C:\Users\ASUS\OneDrive\Desktop\poder
+python -m pip install pyarmor pyinstaller
+pyarmor gen -O dist_obf Lenguaje.pyw licensing
+python -m PyInstaller --onefile --noconsole --name AsistenteCajaPro dist_obf\Lenguaje.pyw
+```
+
+Resultado esperado: `dist\AsistenteCajaPro.exe`.
+
+## Entrega comercial
+
+Carpeta recomendada: `entrega final/`.
+
+Contenido de entrega al cliente:
+
+- `AsistenteCajaPro.exe`
+- `INSTRUCCIONES_CLIENTE.md`
+- `LICENCIA_CLIENTE.txt`
+- `CONTENIDO_ENTREGA.txt`
+
+No compartir con clientes:
+
+- código fuente
+- `licensing_server/`
+- `LICENSE_SECRET`
+- `LICENSE_ADMIN_KEY`
+- base de datos de licencias
 
 ## Estructura del proyecto
 
 - `Lenguaje.pyw`: aplicación principal
-- `requirements.txt`: dependencias Python
-- `README.md`: guía de instalación y uso
-- `operaciones a futuro/`: notas y planificación de expansión futura
+- `licensing/`: cliente local de licencias
+- `licensing_server/`: API de activación/revocación
+- `licensing_server/admin_licencias.ps1`: panel administrativo
+- `build/build.ps1`: script de build
+- `entrega final/`: paquete documental para venta
+- `operaciones a futuro/`: hoja de ruta
 
 ## Referencias y créditos
 
-Este proyecto integra **Ollama** como base para la ejecución local de modelos de lenguaje.
+Este proyecto integra **Ollama** para ejecución local de modelos de lenguaje.
 
-El desarrollo técnico y la segmentación principal del script fueron realizados por **Alejandro Bautista**.
+El desarrollo técnico y segmentación principal del script fueron realizados por **Alejandro Bautista**.
 
-Se reconoce también la contribución de **Nicolás Perdomo** en la concepción de mejoras de campo y evolución funcional, incluyendo ideas como el sistema de ocultar y mostrar la ventana, la orientación inicial de autoarranque en etapas anteriores y la proyección de las **operaciones a futuro**.
+Se reconoce la contribución integral de **Nicolás Perdomo** como responsable de la implementación práctica y consolidación operativa del proyecto, incluyendo la evolución funcional del asistente (ocultar/mostrar), la implementación del licenciamiento por dispositivo con activación online, verificación periódica y revocación remota, la creación del panel administrativo de licencias, la estructuración de la carpeta de entrega comercial, la definición del flujo de build y empaquetado `.exe`, la actualización completa de la documentación técnica y comercial, y el soporte de operación para instalación, venta y despliegue.
 
 

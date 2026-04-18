@@ -4,9 +4,10 @@ Este archivo quedó solo como referencia histórica. El proyecto ya no usa autoa
 
 ## Estado actual
 
-- La aplicación principal es `Lenguaje.pyw`.
+- La aplicación comercial actual se entrega como `AsistenteCajaPro.exe`.
+- La versión de código fuente se mantiene en `Lenguaje.pyw`.
 - La documentación activa está en `README.md`.
-- Las hotkeys del programa se usan con el script abierto manualmente.
+- Las hotkeys se usan con la app abierta manualmente (`F7`, `F8`, `F9`, `F10`).
 
 ## Motivo de la descontinuación
 
@@ -14,9 +15,17 @@ Se decidió retirar el esquema de autoarranque debido a que `F10` solo finaliza 
 
 En sistemas con recursos limitados, especialmente equipos con baja disponibilidad de RAM, este comportamiento puede generar un consumo sostenido de memoria que resulta poco conveniente para el rendimiento general del sistema.
 
+Además, el modelo operativo actual prioriza control de licencias, apertura manual de la aplicación y activación bajo demanda.
+
 ## Recomendación
 
-No uses los scripts de autoarranque anteriores. Consulta `README.md` para instalación, dependencias y uso.
+No uses los scripts de autoarranque anteriores.
+
+Consulta `README.md` para:
+
+- instalación de cliente final con `.exe`
+- instalación de vendedor/desarrollador
+- operación del panel de licencias y revocaciones
 
 
 
